@@ -1,0 +1,14 @@
+sudo apt-get install python-smbus i2c-tools
+ sudo i2cdetect -y 1 (to detect if rtcis properly connected to pi)
+dtoverlay=i2c-rtc,ds3231 (setting up pi RTC time)
+sudo apt-get -y remove fake-hwclock (to remove fake hwclock)
+sudo update-rc.d -f fake-hwclock remove (")
+sudo nano /lib/udev/hwclock-set
+(to comment the lines:
+ if [ -e /run/systemd/system ] ; then
+    exit 0
+fi)
+sudo hwclock -D -r (to read time directly from RTC)
+date (for checking the pi time)
+sudo hwclock -w (write the time from the pi to the RTC module)
+sudo hwclock -r (read the time from the RTC module)
